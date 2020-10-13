@@ -1,4 +1,4 @@
-# Using Bellman Ford for finding arbitrage opportunities
+# Using Bellman Ford to find arbitrage opportunities
 
 This is a programming task that was completed as part of an application process.
 

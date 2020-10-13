@@ -1,0 +1,129 @@
+The goal of this test is to demonstrate your programming capabilities in python.
+Use an arbitrage algorithm to find the arbitrage paths for the provided data set. 
+I've included an example to the Bellman-Ford algorithm below, but you're welcome to find a better one. Just don't use the brute force method in this example. 
+There may be many arbitragable paths, but the goal is to find at least one 2-leg trade and at least one 3-leg trade.
+You can assume we have all necessary assets on all exchanges. 
+
+Please let me know if you have any questions along the way. You can email me at jz@keeperdao.com. 
+
+1.) Install python3 (the latest 3.x version should be fine, just not python 2.x)
+2.) Take a look at the Bellman-Ford algorithm, https://gist.github.com/anilpai/fe4e11b5c59d8c02813900813396400b
+    This one should copy/paste just fine without needing to install much of anything. 
+    You're welcome to find a better algorithm or another implementation of the same algorithm. 
+    Just don't use the brute force method.
+3.) Take the provided market prices data set and create a graph that can be inputted into your algorithm.  
+    Note: when inputing data into the graph, I don't think Bellman-Ford directly supports multiple exchanges.
+          So to use the data below (which contains multiple exchanges) you can use the best possible price across all exchanges
+          Example: Parse the data dictionary below and find the best bid price across all ETH-USDC markets.  And use only that exchange's price.  
+                   Do the same thing for both bids and asks, for all market pairs.  
+                   So the graph will contain only the best prices, not the 2nd or 3rd best prices. 
+4.) Find profitable paths (at least one 2-leg trade and one 3-leg trade), print them out.  You can completely disregard trading fees, just assume they are built into the price.  
+5.) Quantify profitability.  Sort the found profitable paths from most profitable to least profitable.  
+
+Two known profitable paths to look for are:
+  - rep -> eth -> usdc -> rep
+      - REP -> ETH at Coinbase (selling REP at bid price)
+      - ETH -> USDC at Facebook Marketplace (selling ETH at bid price)
+      - USDC -> REP at Sketchy dude at the bar (buying REP at ask price)
+  - rep -> eth -> rep
+      - REP -> ETH at Coinbase (selling REP at bid price)
+      - ETH -> REP at Creepy White Van (buying REP at ask price)
+
+Market prices data set (You can copy/paste this right into python)
+
+myPythonDictionary = {
+    'exchanges': [
+        {
+            'name': 'Coinbase',
+            'prices': [
+                {
+                    'quoteToken': 'usdc',
+                    'baseToken': 'eth',
+                    'bid': 384.95,
+                    'ask': 384.96,
+                },
+                {
+                    'quoteToken': 'eth',
+                    'baseToken': 'rep',
+                    'bid': 0.05455,
+                    'ask': 0.05456,
+                },
+                {
+                    'quoteToken': 'usdc',
+                    'baseToken': 'rep',
+                    'bid': 20.975,
+                    'ask': 20.976,
+                },
+            ]
+        },
+        {
+            'name': 'Creepy white van',
+            'prices': [
+                {
+                    'quoteToken': 'usdc',
+                    'baseToken': 'eth',
+                    'bid': 384.9,
+                    'ask': 385,
+                },
+                {
+                    'quoteToken': 'eth',
+                    'baseToken': 'rep',
+                    'bid': 0.0505,
+                    'ask': 0.0506,
+                },
+                {
+                    'quoteToken': 'usdc',
+                    'baseToken': 'rep',
+                    'bid': 20.97,
+                    'ask': 20.98,
+                },
+            ]
+        },
+        {
+            'name': 'Sketchy dude at the bar',
+            'prices': [
+                {
+                    'quoteToken': 'usdc',
+                    'baseToken': 'eth',
+                    'bid': 384.9,
+                    'ask': 385,
+                },
+                {
+                    'quoteToken': 'eth',
+                    'baseToken': 'rep',
+                    'bid': 0.0545,
+                    'ask': 0.0546,
+                },
+                {
+                    'quoteToken': 'usdc',
+                    'baseToken': 'rep',
+                    'bid': 19.97,
+                    'ask': 19.98,
+                },
+            ]
+        },
+        {
+            'name': 'Facebook market place',
+            'prices': [
+                {
+                    'quoteToken': 'usdc',
+                    'baseToken': 'eth',
+                    'bid': 394.9,
+                    'ask': 395,
+                },
+                {
+                    'quoteToken': 'eth',
+                    'baseToken': 'rep',
+                    'bid': 0.0545,
+                    'ask': 0.0546,
+                },
+                {
+                    'quoteToken': 'usdc',
+                    'baseToken': 'rep',
+                    'bid': 20.97,
+                    'ask': 20.98,
+                },
+            ]
+        },
+    ]
+}

@@ -135,7 +135,7 @@ def main(tokens: List[str]):
     profits, value_matrix = calculate_profits(arb_paths, rates)
     all_profits.append(profits)    
 
-ata = data.myPythonDictionary["exchanges"]    
+data = data.myPythonDictionary["exchanges"]    
 tokens = ['eth', 'rep', 'usdc']
 perm_tokens = list(itertools.permutations(tokens))
 all_profits = []
